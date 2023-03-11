@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tutorial-details',
-  templateUrl: './tutorial-details.component.html',
-  styleUrls: ['./tutorial-details.component.css']
+  selector: 'app-employee-details',
+  templateUrl: './employee-details.component.html',
+  styleUrls: ['./employee-details.component.css']
 })
-export class TutorialDetailsComponent implements OnInit {
+export class EmployeeDetailsComponent implements OnInit {
   currentTutorial = null;
   message = '';
 
   constructor(
-    private tutorialService: TutorialService,
+    private tutorialService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router) { }
 

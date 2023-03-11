@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TutorialService } from 'src/app/services/tutorial.service';
+import { EmployeeService } from 'src/app/services/employee.service';
 
 @Component({
-  selector: 'app-add-tutorial',
-  templateUrl: './add-tutorial.component.html',
-  styleUrls: ['./add-tutorial.component.css']
+  selector: 'app-add-employee',
+  templateUrl: './add-department.component.html',
+  styleUrls: ['./add-department.component.css']
 })
-export class AddTutorialComponent implements OnInit {
+export class AddDepartmentComponent implements OnInit {
   tutorial = {
     title: '',
     description: '',
@@ -14,7 +14,7 @@ export class AddTutorialComponent implements OnInit {
   };
   submitted = false;
 
-  constructor(private tutorialService: TutorialService) { }
+  constructor(private tutorialService: EmployeeService) { }
 
   ngOnInit(): void {
   }
