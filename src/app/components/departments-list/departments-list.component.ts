@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
+import {Component, OnInit} from '@angular/core';
+import {DepartmentService} from '../../services/department.service';
 
 @Component({
   selector: 'app-employees-list',
@@ -8,61 +8,32 @@ import { EmployeeService } from 'src/app/services/employee.service';
 })
 export class DepartmentsListComponent implements OnInit {
 
-  tutorials: any;
-  currentTutorial = null;
+  departments: any;
+  currentDepartment = null;
   currentIndex = -1;
   title = '';
+  pageNumber: number = 0;
+  pageSize: number = 10;
 
-  constructor(private tutorialService: EmployeeService) { }
+  constructor(private departmentService: DepartmentService) {
+  }
 
   ngOnInit(): void {
-    this.retrieveTutorials();
+    this.retrieveDepartments();
   }
 
-  retrieveTutorials(): void {
-    this.tutorialService.getAll()
+  retrieveDepartments(): void {
+    this.departmentService.getPaginatedDepartments(this.pageNumber, this.pageSize)
       .subscribe(
         data => {
-          this.tutorials = data;
-          console.log(data);
+          this.departments = data;
         },
         error => {
           console.log(error);
         });
   }
-
-  refreshList(): void {
-    this.retrieveTutorials();
-    this.currentTutorial = null;
-    this.currentIndex = -1;
-  }
-
-  setActiveTutorial(tutorial, index): void {
-    this.currentTutorial = tutorial;
+  setActiveDepartment(department, index): void {
+    this.currentDepartment = department;
     this.currentIndex = index;
-  }
-
-  removeAllTutorials(): void {
-    this.tutorialService.deleteAll()
-      .subscribe(
-        response => {
-          console.log(response);
-          this.refreshList();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  searchTitle(): void {
-    this.tutorialService.findByTitle(this.title)
-      .subscribe(
-        data => {
-          this.tutorials = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
   }
 }

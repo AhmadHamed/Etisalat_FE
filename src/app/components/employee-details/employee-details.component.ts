@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {EmployeeService} from 'src/app/services/employee.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-employee-details',
@@ -8,24 +8,36 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
-  currentTutorial = null;
-  message = '';
+  currentEmployee = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    hire_date: new Date(),
+    salary: 0,
+    manager_id: '',
+    department_id: ''
+  };
+  message: string = '';
+  id: string;
 
   constructor(
-    private tutorialService: EmployeeService,
+    private employeeService: EmployeeService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit(): void {
     this.message = '';
-    this.getTutorial(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getEmployee(this.id);
   }
 
-  getTutorial(id): void {
-    this.tutorialService.get(id)
+  getEmployee(id): void {
+    this.employeeService.get(id)
       .subscribe(
         data => {
-          this.currentTutorial = data;
+          this.currentEmployee = data;
           console.log(data);
         },
         error => {
@@ -33,42 +45,23 @@ export class EmployeeDetailsComponent implements OnInit {
         });
   }
 
-  updatePublished(status): void {
-    const data = {
-      title: this.currentTutorial.title,
-      description: this.currentTutorial.description,
-      published: status
-    };
 
-    this.tutorialService.update(this.currentTutorial.id, data)
+  updateEmployee(): void {
+    this.employeeService.update(this.id, this.currentEmployee)
       .subscribe(
-        response => {
-          this.currentTutorial.published = status;
-          console.log(response);
+        () => {
+          this.message = 'The employee was updated successfully!';
         },
         error => {
           console.log(error);
         });
   }
 
-  updateTutorial(): void {
-    this.tutorialService.update(this.currentTutorial.id, this.currentTutorial)
+  deleteEmployee(): void {
+    this.employeeService.delete(this.id)
       .subscribe(
-        response => {
-          console.log(response);
-          this.message = 'The tutorial was updated successfully!';
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  deleteTutorial(): void {
-    this.tutorialService.delete(this.currentTutorial.id)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/tutorials']);
+        () => {
+          this.router.navigate(['/employees']);
         },
         error => {
           console.log(error);

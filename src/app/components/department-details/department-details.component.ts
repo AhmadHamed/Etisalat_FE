@@ -1,74 +1,60 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DepartmentService} from '../../services/department.service';
 
 @Component({
-  selector: 'app-employee-details',
+  selector: 'app-department-details',
   templateUrl: './department-details.component.html',
   styleUrls: ['./department-details.component.css']
 })
 export class DepartmentDetailsComponent implements OnInit {
-  currentTutorial = null;
+  currentDepartment = {
+    department_name: '',
+    manager_id: ''
+  };
   message = '';
+  id: string;
 
   constructor(
-    private tutorialService: EmployeeService,
+    private departmentService: DepartmentService,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router) {
+  }
 
   ngOnInit(): void {
     this.message = '';
-    this.getTutorial(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.getDepartment(this.id);
   }
 
-  getTutorial(id): void {
-    this.tutorialService.get(id)
+  getDepartment(id): void {
+    this.departmentService.get(id)
       .subscribe(
         data => {
-          this.currentTutorial = data;
-          console.log(data);
+          this.currentDepartment = data;
         },
         error => {
           console.log(error);
         });
   }
 
-  updatePublished(status): void {
-    const data = {
-      title: this.currentTutorial.title,
-      description: this.currentTutorial.description,
-      published: status
-    };
 
-    this.tutorialService.update(this.currentTutorial.id, data)
+  updateDepartment(): void {
+    this.departmentService.update(this.id, this.currentDepartment)
       .subscribe(
-        response => {
-          this.currentTutorial.published = status;
-          console.log(response);
+        () => {
+          this.message = 'The department was updated successfully!';
         },
         error => {
           console.log(error);
         });
   }
 
-  updateTutorial(): void {
-    this.tutorialService.update(this.currentTutorial.id, this.currentTutorial)
+  deleteDepartment(): void {
+    this.departmentService.delete(this.id)
       .subscribe(
         response => {
-          console.log(response);
-          this.message = 'The tutorial was updated successfully!';
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  deleteTutorial(): void {
-    this.tutorialService.delete(this.currentTutorial.id)
-      .subscribe(
-        response => {
-          console.log(response);
-          this.router.navigate(['/tutorials']);
+          this.router.navigate(['/departments']);
         },
         error => {
           console.log(error);

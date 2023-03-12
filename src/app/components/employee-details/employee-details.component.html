@@ -1,65 +1,105 @@
 <div style="width: 400px; margin: auto;">
-  <div *ngIf="currentTutorial" class="edit-form">
-    <h4>Tutorial</h4>
+  <div *ngIf="currentEmployee" class="edit-form">
+    <h4>Employee</h4>
     <form>
       <div class="form-group">
-        <label for="title">Title</label>
+        <label for="first_name">First Name</label>
         <input
           type="text"
           class="form-control"
-          id="title"
-          [(ngModel)]="currentTutorial.title"
-          name="title"
+          id="first_name"
+          required
+          [(ngModel)]="currentEmployee.first_name"
+          name="first_name"
         />
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
+        <label for="last_name">Last Name</label>
         <input
           type="text"
           class="form-control"
-          id="description"
-          [(ngModel)]="currentTutorial.description"
-          name="description"
+          id="last_name"
+          required
+          [(ngModel)]="currentEmployee.last_name"
+          name="last_name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          required
+          [(ngModel)]="currentEmployee.email"
+          name="email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="phone_number">phone number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="phone_number"
+          required
+          [(ngModel)]="currentEmployee.phone_number"
+          name="phone_number"
+        />
+      </div>
+      <div class="form-group">
+        <label for="salary">Salary</label>
+        <input
+          type="text"
+          class="form-control"
+          id="salary"
+          required
+          [(ngModel)]="currentEmployee.salary"
+          name="salary"
+        />
+      </div>
+      <div class="form-group">
+        <label for="manager_id">Manager</label>
+        <input
+          type="text"
+          class="form-control"
+          id="manager_id"
+          required
+          [(ngModel)]="currentEmployee.manager_id"
+          name="manager_id"
+        />
+      </div>
+      <div class="form-group">
+        <label for="department_id">Department</label>
+        <input
+          type="text"
+          class="form-control"
+          id="department_id"
+          required
+          [(ngModel)]="currentEmployee.department_id"
+          name="department_id"
         />
       </div>
 
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentTutorial.published ? "Published" : "Pending" }}
-      </div>
+
     </form>
 
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentTutorial.published"
-      (click)="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentTutorial.published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
-      Publish
-    </button>
 
-    <button class="badge badge-danger mr-2" (click)="deleteTutorial()">
+    <button class="badge badge-danger mr-2" (click)="deleteEmployee()">
       Delete
     </button>
 
     <button
       type="submit"
       class="badge badge-success"
-      (click)="updateTutorial()"
+      (click)="updateEmployee()"
     >
       Update
     </button>
     <p>{{ message }}</p>
   </div>
 
-  <div *ngIf="!currentTutorial">
-    <br />
-    <p>Cannot access this Tutorial...</p>
+  <div *ngIf="!currentEmployee">
+    <br/>
+    <p>Cannot access this Employee...</p>
   </div>
 </div>

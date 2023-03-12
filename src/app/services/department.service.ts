@@ -1,18 +1,22 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-const baseUrl = 'http://localhost:8080/api/tutorials';
+const baseUrl = 'http://localhost:8090/departments';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeService {
+export class DepartmentService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  getAll(): Observable<any> {
-    return this.http.get(baseUrl);
+  getPaginatedDepartments(pageNumber: any, pageSize: any): Observable<any> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('page', String(pageNumber));
+    queryParams = queryParams.append('size', String(pageSize));
+    return this.http.get(baseUrl, {params: queryParams});
   }
 
   get(id): Observable<any> {
@@ -29,13 +33,5 @@ export class EmployeeService {
 
   delete(id): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
-  }
-
-  deleteAll(): Observable<any> {
-    return this.http.delete(baseUrl);
-  }
-
-  findByTitle(title): Observable<any> {
-    return this.http.get(`${baseUrl}?title=${title}`);
   }
 }

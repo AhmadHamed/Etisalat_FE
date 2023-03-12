@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
+import {Component, OnInit} from '@angular/core';
+import {EmployeeService} from 'src/app/services/employee.service';
 
 @Component({
   selector: 'app-add-employee',
@@ -7,28 +7,39 @@ import { EmployeeService } from 'src/app/services/employee.service';
   styleUrls: ['./add-employee.component.css']
 })
 export class AddEmployeeComponent implements OnInit {
-  tutorial = {
-    title: '',
-    description: '',
-    published: false
+  employee = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone_number: '',
+    hire_date: new Date(),
+    salary: 0,
+    manager_id: '',
+    department_id: ''
   };
   submitted = false;
 
-  constructor(private tutorialService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService) {
+  }
 
   ngOnInit(): void {
   }
 
-  saveTutorial(): void {
+  saveEmployee(): void {
     const data = {
-      title: this.tutorial.title,
-      description: this.tutorial.description
+      first_name: this.employee.first_name,
+      last_name: this.employee.last_name,
+      email: this.employee.email,
+      phone_number: this.employee.phone_number,
+      hire_date: new Date(),
+      salary: this.employee.salary,
+      manager_id: this.employee.manager_id,
+      department_id: this.employee.department_id
     };
 
-    this.tutorialService.create(data)
+    this.employeeService.create(data)
       .subscribe(
-        response => {
-          console.log(response);
+        () => {
           this.submitted = true;
         },
         error => {
@@ -36,12 +47,17 @@ export class AddEmployeeComponent implements OnInit {
         });
   }
 
-  newTutorial(): void {
+  newEmployee(): void {
     this.submitted = false;
-    this.tutorial = {
-      title: '',
-      description: '',
-      published: false
+    this.employee = {
+      first_name: '',
+      last_name: '',
+      email: '',
+      phone_number: '',
+      hire_date: new Date(),
+      salary: 1000,
+      manager_id: '',
+      department_id: ''
     };
   }
 

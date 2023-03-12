@@ -1,34 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { EmployeeService } from 'src/app/services/employee.service';
+import {Component, OnInit} from '@angular/core';
+import {DepartmentService} from '../../services/department.service';
 
 @Component({
-  selector: 'app-add-employee',
+  selector: 'app-add-department',
   templateUrl: './add-department.component.html',
   styleUrls: ['./add-department.component.css']
 })
 export class AddDepartmentComponent implements OnInit {
-  tutorial = {
-    title: '',
-    description: '',
-    published: false
+  department = {
+    department_name: '',
+    manager_id: ''
   };
   submitted = false;
 
-  constructor(private tutorialService: EmployeeService) { }
+  constructor(private departmentService: DepartmentService) {
+  }
 
   ngOnInit(): void {
   }
 
-  saveTutorial(): void {
+  saveDepartment(): void {
     const data = {
-      title: this.tutorial.title,
-      description: this.tutorial.description
+      department_name: this.department.department_name,
+      manager_id: this.department.manager_id
     };
 
-    this.tutorialService.create(data)
+    this.departmentService.create(data)
       .subscribe(
-        response => {
-          console.log(response);
+        () => {
           this.submitted = true;
         },
         error => {
@@ -36,13 +35,12 @@ export class AddDepartmentComponent implements OnInit {
         });
   }
 
-  newTutorial(): void {
-    this.submitted = false;
-    this.tutorial = {
-      title: '',
-      description: '',
-      published: false
+  newDepartment(): void {
+    this.department = {
+      department_name: '',
+      manager_id: ''
     };
+    this.submitted = false;
   }
 
 }
